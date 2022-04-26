@@ -7,7 +7,7 @@ export default function Nav() {
     <div>
 
 
-      <Menu size='mini'>
+      <Menu inverted>
         <Container>
         <Menu.Item
           name='home'

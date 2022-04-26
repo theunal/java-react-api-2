@@ -5,6 +5,7 @@ import ProductService from '../services/productService'
 export default function ProductList() {
 
   const [products, setProducts] = useState([])
+
   useEffect( () => {
     let productService = new ProductService()
     productService.getProducts()
@@ -30,8 +31,11 @@ export default function ProductList() {
 
         <Table.Body>
           {
+            // ürün getirdiğimizde bizden bir key istiyor aşagıda "products.id" olarak bir key verdik
+            // vermezsek client kısmında error veriyor >> "a unique "key" prop."
+            // herhangi birşeyi key olarak verebiliriz
             products.map(products => (
-              <Table.Row>
+              <Table.Row key={products.id}>
               <Table.Cell>{products.id}</Table.Cell>
               <Table.Cell>{products.productName}</Table.Cell>
               <Table.Cell>{products.unitPrice}</Table.Cell>
