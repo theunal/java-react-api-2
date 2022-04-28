@@ -1,10 +1,10 @@
 import React from 'react'
 import ProductList from '../pages/ProductList';
 import Categories from './Categories'
-// import ProductList from '../pages/ProductList'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { Route, Routes } from 'react-router-dom';
 import ProductDetail from './../pages/ProductDetail';
+import CartDetail from "../pages/CartDetail";
 
 
 export default function Dashboard() {
@@ -26,7 +26,8 @@ export default function Dashboard() {
               {/* component yazınca getirmiyor o yüzden element  */}
               <Route  path="/" element={<ProductList />} />
               <Route exact path="/products" element={<ProductList />} />
-              <Route exact path="/products/1" element={<ProductDetail />} />
+              <Route exact path="/products/:name" element={<ProductDetail />} />
+              <Route exact path="/cart" element={<CartDetail />} />
             </Routes>
 
 

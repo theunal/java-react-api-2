@@ -3,17 +3,22 @@ import { Container, Menu } from 'semantic-ui-react'
 import CartSummary from './CartSummary'
 import SignIn from './SignIn'
 import SignOut from './SignOut';
+import { useNavigate } from 'react-router';
 
 export default function Nav() {
 
   const [isAuth, setIsAuth] = useState(false)
 
+  
+  const navigate = useNavigate()
+
   function handleSignOut() {
-     setIsAuth(false)
+    setIsAuth(false)
+    navigate("/")
   }
   function handleSignIn() {
     setIsAuth(true)
- }
+  }
 
   return (
     <div>
@@ -34,7 +39,7 @@ export default function Nav() {
 
             <Menu.Item>
               {
-                isAuth ? <SignIn signOut={handleSignOut}/> : <SignOut signIn={handleSignIn}/>
+                isAuth ? <SignIn signOut={handleSignOut} /> : <SignOut signIn={handleSignIn} />
               }
             </Menu.Item>
 
