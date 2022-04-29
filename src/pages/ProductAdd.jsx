@@ -4,7 +4,8 @@ import { Form, Formik } from 'formik'
 import { Button } from 'semantic-ui-react'
 import TextInput from '../utilities/customFromControl/TextInput'
 import ProductService from '../services/productService'
-
+import { toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 export default function ProductAdd() {
 
@@ -23,21 +24,41 @@ export default function ProductAdd() {
 
     return (
         <div>
-
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <Formik
                 initialValues={initialValues}
                 validationSchema={schema}
-                onSubmit={(values) => {
+                onSubmit={(values, { resetForm }) => {
                     productService.add(values)
+                    resetForm()
+                    toast.success(`Ürün eklendi: ${values.productName}`, {
+                        position: "top-center",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
 
-                    // console.log(values)
-                }}
+                }
 
             >
                 <Form className='ui form'>
-                    <TextInput name="productName" placeholder="ürün adı" />
+                    <TextInput className="five wide field" name="productName" placeholder="ürün adı" />
                     <br />
-                    <TextInput name="unitPrice" placeholder="ürün fiyatı" />
+                    <TextInput className="five wide field" name="unitPrice" placeholder="ürün fiyatı" />
                     <br />
                     <Button color='green' type='submit'>Ekle</Button>
                 </Form>
