@@ -7,14 +7,13 @@ export default function ProductDetail() {
 
   let { name } = useParams()
 
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState({})
 
-  useEffect( () => {
+  useEffect(() => {
     let productService = new ProductService()
     productService.getByProductName(name)
-    .then(result => setProduct(result.data.data))
-  },[])
-// burada kaldım dk 2.40 dan başla getbyproductname i bastan izle
+      .then(result => setProduct(result.data.data))
+  })
 
   return (
     <div>
@@ -28,8 +27,8 @@ export default function ProductDetail() {
               size='mini'
               src='/images/avatar/large/steve.jpg'
             />
-            <Card.Header>Steve Sanders</Card.Header>
-            <Card.Meta>Friends of Elliot</Card.Meta>
+            <Card.Header>{product.productName}</Card.Header>
+            <Card.Meta> </Card.Meta>
             <Card.Description>
               Steve wants to add you to the group <strong>best friends</strong>
             </Card.Description>

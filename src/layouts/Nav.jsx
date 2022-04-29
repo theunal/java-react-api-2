@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { Container, Menu } from 'semantic-ui-react'
 import CartSummary from './CartSummary'
+import { Container, Menu } from 'semantic-ui-react'
+import SignOut from './SignOut'
 import SignIn from './SignIn'
-import SignOut from './SignOut';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
 export default function Nav() {
 
-  const [isAuth, setIsAuth] = useState(false)
+  const { cartItems } = useSelector(state => state.cart)
+
+  const [isAuth, setIsAuth] = useState(true)
 
   
   const navigate = useNavigate()
@@ -34,7 +37,11 @@ export default function Nav() {
           <Menu.Menu position='right'>
 
             <Menu.Item>
-              <CartSummary />
+              {
+                cartItems.length > 0  &&    <CartSummary />
+              }
+           
+             
             </Menu.Item>
 
             <Menu.Item>

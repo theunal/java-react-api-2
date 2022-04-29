@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Icon, Menu, Table } from 'semantic-ui-react'
+import { Link } from "react-router-dom"
+import { Button, Icon, Menu, Table } from 'semantic-ui-react'
 import ProductService from '../services/productService'
-import {Link} from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../store/actions/cartActions'
 
 export default function ProductList() {
 
+  const dispatch = useDispatch()
+
   const [products, setProducts] = useState([])
 
-  useEffect( () => {
+
+  useEffect(() => {
     let productService = new ProductService()
     productService.getProducts()
-    .then(result => setProducts(result.data.data))
-  },[])
+      .then((result) => setProducts(result.data.data))
+  }, [])
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product))
+  }
+
+ 
+
 
   return (
     <div>
@@ -26,6 +38,7 @@ export default function ProductList() {
             <Table.HeaderCell>Stok Adedi</Table.HeaderCell>
             <Table.HeaderCell>Açıklama</Table.HeaderCell>
             <Table.HeaderCell>Kategori</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
 
         </Table.Header>
@@ -35,23 +48,29 @@ export default function ProductList() {
             // ürün getirdiğimizde bizden bir key istiyor aşagıda "products.id" olarak bir key verdik
             // vermezsek client kısmında error veriyor >> "a unique "key" prop."
             // herhangi birşeyi key olarak verebiliriz
-            products.map(products => (
-              <Table.Row key={products.id}>
-              <Table.Cell>{products.id}</Table.Cell>
-              <Table.Cell>
+            products.map(product => (
+              <Table.Row key={product.id}>
 
-                <Link to={`/products/${products.id}`}>
-                  {products.productName}
-                </Link>
+                <Table.Cell>{product.id}</Table.Cell>
 
-              </Table.Cell>
-              <Table.Cell>{products.unitPrice}</Table.Cell>
-              <Table.Cell>{products.stok}</Table.Cell>
-              <Table.Cell>{products.quantityPerUnit}</Table.Cell>
-              <Table.Cell>{products.category.categoryName}</Table.Cell>
-            </Table.Row>
-             ))
-          }
+                <Table.Cell>
+                  <Link to={`/products/${product.productName}`}>
+                    {product.productName}
+                  </Link>
+                </Table.Cell>
+
+                <Table.Cell>{product.unitPrice}</Table.Cell>
+                <Table.Cell>{product.stok}</Table.Cell>
+                <Table.Cell>{product.quantityPerUnit}</Table.Cell>
+                <Table.Cell>{product.category.categoryName}</Table.Cell>
+
+                <Table.Cell>
+                <Button onClick={()=>handleAddToCart(product)}>Sepete ekle</Button>
+                </Table.Cell>
+
+              </Table.Row>
+            ))
+            }
 
 
 
