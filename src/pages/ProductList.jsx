@@ -4,6 +4,7 @@ import { Button, Icon, Menu, Table } from 'semantic-ui-react'
 import ProductService from '../services/productService'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../store/actions/cartActions'
+import { toast } from 'react-toastify'
 
 export default function ProductList() {
 
@@ -20,6 +21,7 @@ export default function ProductList() {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product))
+    toast.success(`Sepete eklendi: ${product.productName}`)
   }
 
  
